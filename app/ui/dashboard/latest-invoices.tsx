@@ -1,21 +1,49 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Image from "next/image";
-import { lusitana } from "@/app/ui/fonts";
-import { fetchLatestInvoices } from "@/app/lib/data";
-export default async function LatestInvoices() {
-  const latestInvoices = await fetchLatestInvoices();
+import { inter } from "@/app/ui/fonts";
+import { LatestInvoice } from "@/app/lib/definitions";
+
+const formatTimeAgo = (date: Date): string => {
+  const now = new Date();
+  const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  if (seconds < 60) {
+    return "just now";
+  }
+
+  const minutes = Math.floor(seconds / 60);
+  return `${minutes}m ago`;
+};
+export default function LatestInvoices({
+  latestInvoices,
+}: {
+  latestInvoices: LatestInvoice[];
+}) {
+  const [initialTime] = useState(new Date());
+  const [timeAgo, setTimeAgo] = useState("just now");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeAgo(formatTimeAgo(initialTime));
+    }, 60000); // update every minute
+
+    return () => clearInterval(interval);
+  }, [initialTime]);
 
   return (
     <div className="flex w-full flex-col md:col-span-4">
-      <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+      <h2 className={`${inter.className} mb-4 text-xl md:text-2xl`}>
         Latest Invoices
       </h2>
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-4">
         {/* NOTE: Uncomment this code in Chapter 7 */}
 
         <div className="bg-white px-6">
-          {latestInvoices.map((invoice, i) => {
+          {latestInvoices?.map((invoice, i) => {
             return (
               <div
                 key={invoice.id}
@@ -44,7 +72,7 @@ export default async function LatestInvoices() {
                   </div>
                 </div>
                 <p
-                  className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
+                  className={`${inter.className} truncate text-sm font-medium md:text-base`}
                 >
                   {invoice.amount}
                 </p>
@@ -54,7 +82,7 @@ export default async function LatestInvoices() {
         </div>
         <div className="flex items-center pb-2 pt-6">
           <ArrowPathIcon className="h-5 w-5 text-gray-500" />
-          <h3 className="ml-2 text-sm text-gray-500 ">Updated just now</h3>
+          <h3 className="ml-2 text-sm text-gray-500 ">Updated {timeAgo}</h3>
         </div>
       </div>
     </div>

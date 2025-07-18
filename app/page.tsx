@@ -1,51 +1,72 @@
-import AcmeLogo from "@/app/ui/acme-logo";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { lusitana } from "@/app/ui/fonts";
 import Image from "next/image";
-
+import { turretRoad } from "@/app/ui/fonts";
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col p-6">
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
-        <AcmeLogo />
-      </div>
-      <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
-          <p
-            className={`${lusitana.className} text-xl text-gray-800 md:text-3xl md:leading-normal`}
-          >
-            <strong>Welcome to Acme.</strong> This is the example for the{" "}
-            <a href="https://nextjs.org/learn/" className="text-blue-500">
-              Next.js Learn Course
-            </a>
-            , brought to you by Vercel.
-          </p>
+    <main className="min-h-screen bg-gradient-to-b from-[#f9f9f0] via-[#fefeff] to-[#f0fffc] text-gray-900">
+      {/* Navigation */}
+      <header className="flex justify-between items-center px-6 md:px-12 py-6">
+        <div className="text-lg font-semibold tracking-tight">Invoicia</div>
+        <nav className="hidden md:flex gap-6 text-sm text-gray-700">
+          <Link href="#">Product</Link>
+          <Link href="#">Features</Link>
+          <Link href="#">Marketplace</Link>
+          <Link href="#">Company</Link>
+        </nav>
+        <Link
+          href="/login"
+          className="text-sm font-medium underline underline-offset-4 hover:text-secondary"
+        >
+          Log in →
+        </Link>
+      </header>
+
+      {/* Hero Section */}
+      <section className="px-6 md:px-12 py-20 text-center">
+        <h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">
+          Simplify your{" "}
+          <span className={`${turretRoad.className} text-gray-800`}>
+            invoicing
+          </span>{" "}
+          and get paid faster
+        </h1>
+        <p className="mt-4 max-w-xl mx-auto text-sm text-gray-600">
+          Manage your customers, create professional invoices, and track
+          payments — all in one sleek dashboard.
+        </p>
+        <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
           <Link
             href="/login"
-            className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
+            className="rounded-full bg-primary px-6 py-2 text-sm font-semibold text-secondary transition-colors hover:bg-secondary hover:text-primary"
           >
-            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
+            Get started
+          </Link>
+          <Link
+            href="#"
+            className="text-sm font-medium underline underline-offset-4 hover:text-primary"
+          >
+            Learn more →
           </Link>
         </div>
-        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          {/* Add Hero Images Here */}
+      </section>
+
+      {/* Dashboard Screenshot Placeholder */}
+      <section className="max-w-6xl mx-auto px-6 md:px-12 py-12">
+        <div className="overflow-hidden ">
           <Image
-            src="/hero-desktop.png"
-            width={1000}
-            height={760}
-            className="hidden md:block"
-            alt="Screenshots of the dashboard project showing desktop version"
-          />
-          <Image
-            src="/hero-mobile.png"
-            width={560}
-            height={620}
-            className="block md:hidden"
-            alt="Screenshots of the dashboard project showing mobile version"
+            src="/invoicia-desktop.png" // replace with actual dashboard screenshot if you want
+            alt="Dashboard preview"
+            width={1280}
+            height={720}
+            className="w-full h-auto object-cover"
           />
         </div>
-      </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="text-center text-xs text-gray-400 pb-10">
+        © {new Date().getFullYear()} Invoicia, Ltda. All rights reserved.
+      </footer>
     </main>
   );
 }
